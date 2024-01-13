@@ -205,4 +205,6 @@
     <string name="err_msg_enter_a_new_password">Please enter a new password.</string>
     <string name="first_name">First Name</string>
     <string name="lbl_chat_with_shop">Chat with shop.</string>
+    <string name="category">Category</string>
+    <string name="all_product">All The Product</string>
 </resources>

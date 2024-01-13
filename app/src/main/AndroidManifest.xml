@@ -20,6 +20,9 @@
         android:theme="@style/Theme.MyAppShop"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.products.PCProductListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.users.ChangePasswordActivity"
             android:exported="false" />
         <activity

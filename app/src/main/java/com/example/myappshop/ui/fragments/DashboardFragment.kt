@@ -51,13 +51,21 @@ class DashboardFragment : BaseFragment() {
 
         // Khởi tạo RecyclerView cho danh sách Category
         val categoryRecyclerView: RecyclerView = root.findViewById(R.id.rec_category)
-        categoryRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        categoryRecyclerView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         categoryRecyclerView.setHasFixedSize(true)
 
         // Khởi tạo Adapter và thiết lập cho RecyclerView
-        val categoryAdapter = CategoryAdapter(categoryItemList)
+        val categoryAdapter = CategoryAdapter(categoryItemList, requireActivity())
         categoryRecyclerView.adapter = categoryAdapter
-
+        categoryAdapter.setOnClickListener(object : CategoryAdapter.OnClickListener {
+            override fun onClick(position: Int, category: CategoryItem) {
+                FirestoreClass().getProductCatelogList(this@DashboardFragment,category.categoryName)
+            }
+        })
+        binding.tvLblAllTheProduct.setOnClickListener {
+            getDashboardItemsList()
+        }
         return root
     }
 
@@ -74,12 +82,14 @@ class DashboardFragment : BaseFragment() {
                 startActivity(Intent(activity, SettingsActivity::class.java))
                 return true
             }
+
             R.id.action_cart -> {
-                startActivity(Intent(activity,CartProductListActivity::class.java))
+                startActivity(Intent(activity, CartProductListActivity::class.java))
                 return true
             }
+
             R.id.action_search -> {
-                startActivity(Intent(activity,SearchProductActivity::class.java))
+                startActivity(Intent(activity, SearchProductActivity::class.java))
                 return true
             }
         }
@@ -90,37 +100,40 @@ class DashboardFragment : BaseFragment() {
         super.onResume()
         getDashboardItemsList()
     }
+
     private fun getDashboardItemsList() {
         showProgessDialog(resources.getString(R.string.please_wait))
         FirestoreClass().getDashboardItemList(this@DashboardFragment)
     }
-    fun successDashboardItemLists(dashboardItemList:ArrayList<Product>){
+
+    fun successDashboardItemLists(dashboardItemList: ArrayList<Product>) {
         hideProgressDialog()
         if (dashboardItemList.size > 0) {
             binding.rvDashboardItems.visibility = View.VISIBLE
             binding.tvNoDashboardItemsFound.visibility = View.GONE
 
-            binding.rvDashboardItems.layoutManager = GridLayoutManager(activity,2)
+            binding.rvDashboardItems.layoutManager = GridLayoutManager(activity, 2)
             binding.rvDashboardItems.setHasFixedSize(true)
 
-            val adapter = DashboardItemListsAdapter(requireActivity(),dashboardItemList)
+            val adapter = DashboardItemListsAdapter(requireActivity(), dashboardItemList)
             binding.rvDashboardItems.adapter = adapter
 
-            adapter.setOnClickListener(object: DashboardItemListsAdapter.OnClickListener{
+            adapter.setOnClickListener(object : DashboardItemListsAdapter.OnClickListener {
                 override fun onClick(position: Int, product: Product) {
-                   val intent = Intent(requireContext(),ProductDetailActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_PRODUCT_ID,product.id)
-                    intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID,product.user_id)
+                    val intent = Intent(requireContext(), ProductDetailActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.id)
+                    intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID, product.user_id)
                     startActivity(intent)
                 }
 
-            } )
-        }else {
+            })
+        } else {
             binding.rvDashboardItems.visibility = View.GONE
             binding.tvNoDashboardItemsFound.visibility = View.VISIBLE
         }
 
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -142,5 +155,13 @@ class DashboardFragment : BaseFragment() {
         // Thêm các mục khác nếu cần
 
         return list
+    }
+    fun successProductCatelogList (productCatelogList:ArrayList<Product>){
+        hideProgressDialog()
+        binding.rvDashboardItems.layoutManager = GridLayoutManager(activity, 2)
+        binding.rvDashboardItems.setHasFixedSize(true)
+
+        val adapter = DashboardItemListsAdapter(requireActivity(), productCatelogList)
+        binding.rvDashboardItems.adapter = adapter
     }
 }

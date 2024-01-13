@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.fragment.app.Fragment
+import com.example.myappshop.R
 import com.example.myappshop.models.Address
 import com.example.myappshop.models.CartProductItem
 import com.example.myappshop.models.Order
@@ -164,7 +165,22 @@ class FirestoreClass {
                 )
             }
     }
-
+    fun getProductCatelogList(fragment: DashboardFragment,categoryName:String){
+        fragment.showProgessDialog(fragment.resources.getString(R.string.please_wait))
+        mFireStore.collection(Constants.PRODUCT).whereEqualTo("type",categoryName).get()
+            .addOnSuccessListener {document ->
+                var productCatelogList = ArrayList<Product>()
+                for (item in document.documents){
+                    val product = item.toObject(Product::class.java)!!
+                    product.id = item.id
+                    productCatelogList.add(product)
+                }
+                fragment.successProductCatelogList(productCatelogList)
+            }
+            .addOnFailureListener {
+                fragment.hideProgressDialog()
+            }
+    }
     fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>) {
         mFireStore.collection(Constants.USERS).document(getCurrentUserId())
             .update(userHashMap)
