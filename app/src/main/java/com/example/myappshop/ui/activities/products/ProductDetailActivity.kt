@@ -77,7 +77,7 @@ class ProductDetailActivity : BaseActivity(), OnClickListener {
     fun productDetailsSuccess(product: Product) {
 //        hideProgressDialog()
         mProductDetails = product
-        FirestoreClass().getUserDetailShop(this@ProductDetailActivity,mProductDetails.user_id)
+        FirestoreClass().getUserDetailShop(this@ProductDetailActivity,product.user_id)
         GliderLoader(this@ProductDetailActivity).loadProductPicture(
             product.image,
             binding?.ivProductDetailImage!!
@@ -191,6 +191,7 @@ class ProductDetailActivity : BaseActivity(), OnClickListener {
     fun userDetailSuccess(user: User) {
         mUser = user
         mIntent = Intent(this@ProductDetailActivity,ChatLogActivity::class.java)
-        mIntent.putExtra(Constants.USER_INFO, mUser)
+        mIntent.putExtra(Constants.USER_INFO, user)
+        mIntent.putExtra(Constants.PRODUCT_TITLE,mProductDetails.title)
     }
 }

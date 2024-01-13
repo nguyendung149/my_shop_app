@@ -60,7 +60,10 @@ class DashboardFragment : BaseFragment() {
         categoryRecyclerView.adapter = categoryAdapter
         categoryAdapter.setOnClickListener(object : CategoryAdapter.OnClickListener {
             override fun onClick(position: Int, category: CategoryItem) {
-                FirestoreClass().getProductCatelogList(this@DashboardFragment,category.categoryName)
+                FirestoreClass().getProductCatelogList(
+                    this@DashboardFragment,
+                    category.categoryName
+                )
             }
         })
         binding.tvLblAllTheProduct.setOnClickListener {
@@ -158,12 +161,22 @@ class DashboardFragment : BaseFragment() {
 
         return list
     }
-    fun successProductCatelogList (productCatelogList:ArrayList<Product>){
+
+    fun successProductCatelogList(productCatelogList: ArrayList<Product>) {
         hideProgressDialog()
         binding.rvDashboardItems.layoutManager = GridLayoutManager(activity, 2)
         binding.rvDashboardItems.setHasFixedSize(true)
 
         val adapter = DashboardItemListsAdapter(requireActivity(), productCatelogList)
         binding.rvDashboardItems.adapter = adapter
+        adapter.setOnClickListener(object : DashboardItemListsAdapter.OnClickListener {
+            override fun onClick(position: Int, product: Product) {
+                val intent = Intent(requireContext(), ProductDetailActivity::class.java)
+                intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.id)
+                intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID, product.user_id)
+                startActivity(intent)
+            }
+
+        })
     }
 }

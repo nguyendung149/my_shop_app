@@ -23,6 +23,7 @@ import com.example.myappshop.databinding.ActivityChatLogBinding
 import com.example.myappshop.firestore.FirestoreClass
 import com.example.myappshop.models.Messages
 import com.example.myappshop.models.User
+import com.example.myappshop.ui.activities.BaseActivity
 import com.example.myappshop.utils.Constants
 import com.example.myappshop.utils.GliderLoader
 import com.google.firebase.auth.FirebaseAuth
@@ -38,7 +39,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.Observer
 
-open class ChatLogActivity : AppCompatActivity() {
+open class ChatLogActivity : BaseActivity() {
     var imageOfList:ArrayList<String> = ArrayList<String>()
     private var messageApater:MessageAdapter? = null
     private var binding: ActivityChatLogBinding? = null
@@ -60,6 +61,9 @@ open class ChatLogActivity : AppCompatActivity() {
 
         }
         setupActionBar()
+        if (intent.hasExtra(Constants.PRODUCT_TITLE)){
+            binding?.etMessageContenet?.setText(intent.getStringExtra(Constants.PRODUCT_TITLE))
+        }
         val user = intent.getParcelableExtra<User>(Constants.USER_INFO)!!
         Picasso.get().load(user.image)
             .into(binding!!.ivUserImage)

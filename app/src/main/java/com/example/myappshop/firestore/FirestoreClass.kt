@@ -131,19 +131,6 @@ class FirestoreClass {
             .addOnSuccessListener { document ->
                 Log.i(activity.javaClass.simpleName, document.toString())
                 val user = document.toObject(User::class.java)!!
-
-                val sharedPreferences = activity.getSharedPreferences(
-                    Constants.MYSHOPAPP_PREFERENCES,
-                    Context.MODE_PRIVATE
-                )
-                val editor = sharedPreferences.edit()
-                editor.putString(
-                    Constants.LOGGED_IN_USERNAME,
-                    "${user.firstName} ${user.lastName}"
-                )
-                editor.apply()
-
-
                 when (activity) {
                     is ProductDetailActivity -> {
                         activity.userDetailSuccess(user)

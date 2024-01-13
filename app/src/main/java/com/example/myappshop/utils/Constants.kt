@@ -83,6 +83,7 @@ object Constants {
 
     const val SOLD_PRODUCTS = "sold_products"
 
+    const val PRODUCT_TITLE = "product_title"
 
     const val EXTRA_SOLD_PRODUCT_DETAILS = "extra_sold_product_details"
 
