@@ -143,6 +143,7 @@
                     tools:text="5" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_product_details_rating"
                 android:layout_width="match_parent"
@@ -165,14 +166,15 @@
 
                 <RatingBar
                     android:id="@+id/rating_bar_row_detail"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.AppCompat.RatingBar.Small"
                     android:numStars="5"
-                    android:progressTint="@color/colorThemePink"
-                    android:progressBackgroundTint="@color/colorSecondaryText"/>
+                    android:progressBackgroundTint="@color/colorSecondaryText"
+                    android:progressTint="@color/colorThemePink" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_product_details_comment"
                 android:layout_width="match_parent"
@@ -197,17 +199,51 @@
                     android:id="@+id/tv_product_details_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:foreground="?attr/selectableItemBackground"
                     android:background="@drawable/item_grey_border_background"
+                    android:foreground="?attr/selectableItemBackground"
                     android:paddingStart="@dimen/product_details_stock_quantity_paddingStartEnd"
                     android:paddingTop="@dimen/product_details_stock_quantity_paddingTopBottom"
                     android:paddingEnd="@dimen/product_details_stock_quantity_paddingStartEnd"
                     android:paddingBottom="@dimen/product_details_stock_quantity_paddingTopBottom"
+                    android:text="@string/more"
                     android:textColor="@color/colorSecondaryText"
                     android:textSize="@dimen/product_details_stock_quantity_textSize"
-                    android:textStyle="bold"
-                    android:text="@string/more" />
+                    android:textStyle="bold" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_chat_with_shop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/product_details_label_margin"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_product_details_comment">
+
+                <ImageButton
+                    android:id="@+id/btn_chat_with_shop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_grey_border_background"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingStart="@dimen/product_details_stock_quantity_paddingStartEnd"
+                    android:paddingTop="@dimen/product_details_stock_quantity_paddingTopBottom"
+                    android:paddingEnd="@dimen/product_details_stock_quantity_paddingStartEnd"
+                    android:paddingBottom="@dimen/product_details_stock_quantity_paddingTopBottom"
+                    android:src="@drawable/baseline_message_24" />
+
+                <com.example.myappshop.utils.MSPTextViewBold
+                    android:id="@+id/tv_chat_with_saleperson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/product_details_stock_quantity_paddingStartEnd"
+                    android:text="@string/lbl_chat_with_shop"
+                    android:textColor="@color/item_value_text_color"
+                    android:textSize="@dimen/product_details_label_textSize"
+                    android:layout_marginStart="10dp"/>
             </LinearLayout>
 
             <com.example.myappshop.utils.MSPButton
@@ -230,7 +266,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_product_details_comment"
+                app:layout_constraintTop_toBottomOf="@id/ll_chat_with_shop"
                 tools:visibility="visible" />
 
             <com.example.myappshop.utils.MSPButton

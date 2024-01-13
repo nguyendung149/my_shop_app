@@ -204,4 +204,5 @@
     <string name="err_msg_enter_old_password">Please enter a old password.</string>
     <string name="err_msg_enter_a_new_password">Please enter a new password.</string>
     <string name="first_name">First Name</string>
+    <string name="lbl_chat_with_shop">Chat with shop.</string>
 </resources>

@@ -29,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
         }
         Handler().postDelayed(
             fun() {
-                startActivity(Intent(this@SplashActivity, DangNhap::class.java))
+                startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
                 finish()
             }, 3000
         )
