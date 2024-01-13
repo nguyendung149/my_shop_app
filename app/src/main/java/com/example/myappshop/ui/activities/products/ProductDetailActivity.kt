@@ -60,7 +60,7 @@ class ProductDetailActivity : BaseActivity(), OnClickListener {
 
             binding?.btnAddToCart?.visibility = View.VISIBLE
         }
-        getProductDetails()
+//        getProductDetails()
         binding?.btnGoToCart?.setOnClickListener(this@ProductDetailActivity)
         binding?.btnAddToCart?.setOnClickListener(this@ProductDetailActivity)
         binding?.tvProductDetailsMore?.setOnClickListener(this@ProductDetailActivity)
@@ -68,6 +68,10 @@ class ProductDetailActivity : BaseActivity(), OnClickListener {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        getProductDetails()
+    }
     private fun getProductDetails() {
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().getProductDetails(this@ProductDetailActivity, mProductID)

@@ -28,6 +28,7 @@ import com.example.myappshop.utils.Constants
 import com.example.myappshop.utils.GliderLoader
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.toObject
 import com.squareup.picasso.Picasso
 
@@ -40,8 +41,8 @@ import java.util.Locale
 import java.util.Observer
 
 open class ChatLogActivity : BaseActivity() {
-    var imageOfList:ArrayList<String> = ArrayList<String>()
-    private var messageApater:MessageAdapter? = null
+    var imageOfList: ArrayList<String> = ArrayList<String>()
+    private var messageApater: MessageAdapter? = null
     private var binding: ActivityChatLogBinding? = null
     private val messageRepo = MessageRepo()
 
@@ -61,7 +62,7 @@ open class ChatLogActivity : BaseActivity() {
 
         }
         setupActionBar()
-        if (intent.hasExtra(Constants.PRODUCT_TITLE)){
+        if (intent.hasExtra(Constants.PRODUCT_TITLE)) {
             binding?.etMessageContenet?.setText(intent.getStringExtra(Constants.PRODUCT_TITLE))
         }
         val user = intent.getParcelableExtra<User>(Constants.USER_INFO)!!
@@ -142,7 +143,6 @@ open class ChatLogActivity : BaseActivity() {
         )
 
 
-
         val uniqueId = listOf(sender, receiver).sorted()
         uniqueId.joinToString(separator = "")
 
@@ -161,6 +161,11 @@ open class ChatLogActivity : BaseActivity() {
                     "friendsimage" to friendimage,
                     "name" to friendname,
                     "person" to "you"
+                )
+                val setHashMapReceiver = hashMapOf<String,Any>(
+                    "message" to binding?.etMessageContenet?.text.toString(),
+                    "time" to getTime(),
+                    "person" to "${user.firstName} ${user.lastName}"
                 )
                 FirebaseFirestore.getInstance().collection("Conversation${sender}")
                     .document(receiver)
@@ -182,8 +187,9 @@ open class ChatLogActivity : BaseActivity() {
             }
 
     }
+
     @SuppressLint("NotifyDataSetChanged")
-    private fun initRecycleView(messageList:List<Messages>){
+    private fun initRecycleView(messageList: List<Messages>) {
         messageApater = MessageAdapter(listOfImage = imageOfList)
         val layoutManager = LinearLayoutManager(this)
         binding?.recyclerviewMessage!!.layoutManager = layoutManager
@@ -193,9 +199,9 @@ open class ChatLogActivity : BaseActivity() {
         binding?.recyclerviewMessage?.adapter = messageApater
 
 
-
     }
-    private fun getMessages(friendid:String):LiveData<List<Messages>>{
+
+    private fun getMessages(friendid: String): LiveData<List<Messages>> {
         return messageRepo.getMessages(friendid)
     }
 }

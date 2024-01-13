@@ -62,6 +62,27 @@ class MessageFragment : BaseFragment(),onChatClicked {
 
         return root
     }
+
+    override fun onResume() {
+        super.onResume()
+        hideProgressDialog()
+        getRecentChat().observe(viewLifecycleOwner, Observer {
+            hideProgressDialog()
+            if(it.isNotEmpty()){
+                binding.ryRecentChat.visibility = View.VISIBLE
+                binding.tvNoMessageItemsFound.visibility = View.GONE
+            }else {
+                binding.tvNoMessageItemsFound.visibility = View.VISIBLE
+                binding.ryRecentChat.visibility = View.GONE
+            }
+            binding.ryRecentChat.layoutManager = LinearLayoutManager(activity)
+            recentChatAdapter!!.setList(it)
+            binding.ryRecentChat.adapter = recentChatAdapter
+        })
+
+        recentChatAdapter!!.setOnChatClickListener(this)
+
+    }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.message_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
