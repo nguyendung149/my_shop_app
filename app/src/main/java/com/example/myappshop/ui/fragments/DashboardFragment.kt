@@ -152,6 +152,8 @@ class DashboardFragment : BaseFragment() {
         list.add(CategoryItem(R.drawable.laptop, "Laptop"))
         list.add(CategoryItem(R.drawable.ssd, "SSD"))
         list.add(CategoryItem(R.drawable.graphiccard, "Graphic Card"))
+        list.add(CategoryItem(R.drawable.cpu, "CPU"))
+
         // Thêm các mục khác nếu cần
 
         return list
