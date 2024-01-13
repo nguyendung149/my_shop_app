@@ -178,8 +178,9 @@ open class ChatLogActivity : BaseActivity() {
                 if (taskmessage.isSuccessful) {
 
                 }
-                binding?.etMessageContenet?.setText(" ")
+
             }
+
     }
     @SuppressLint("NotifyDataSetChanged")
     private fun initRecycleView(messageList:List<Messages>){

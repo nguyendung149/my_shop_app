@@ -115,7 +115,6 @@ class ChatFromMessageHome  : BaseActivity() {
             "message" to binding?.etMessageContentHome?.text.toString(),
             "time" to getTime()
         )
-        binding?.etMessageContentHome?.setText(" ")
         val uniqueId = listOf(sender, receiver).sorted()
         uniqueId.joinToString(separator = "")
         val friendnamesplit = friendname.split("\\s".toRegex())[0]
@@ -148,7 +147,9 @@ class ChatFromMessageHome  : BaseActivity() {
                 if (taskmessage.isSuccessful) {
 
                 }
+
             }
+        
     }
     @SuppressLint("NotifyDataSetChanged")
     private fun initRecycleView(messageList:List<Messages>){

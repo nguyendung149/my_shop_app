@@ -63,10 +63,11 @@ class SearchProductActivity : BaseActivity() {
         )
 
         binding.lvMyProductItemsSearch.adapter = mAdapterProductTitleList
+        binding.lvMyProductItemsSearch.visibility = View.GONE
         binding.lvMyProductItemsSearch.setOnItemClickListener { parent, view, position, id ->
             val intent = Intent(this@SearchProductActivity, ProductDetailActivity::class.java)
-            intent.putExtra(Constants.EXTRA_PRODUCT_ID, productlist[position].id)
-            intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID, productlist[position].user_id)
+            intent.putExtra(Constants.EXTRA_PRODUCT_ID, mProductList[position].id)
+            intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID, mProductList[position].user_id)
             startActivity(intent)
         }
         binding.searchView.setOnQueryTextListener(
@@ -75,6 +76,9 @@ class SearchProductActivity : BaseActivity() {
                     binding.searchView.clearFocus()
                     if (mTitleProductLists!!.contains(query)) {
                         mAdapterProductTitleList!!.filter.filter(query)
+                        if (query != null) {
+                           mProductList = productlist.filter { item -> item.title.lowercase().contains(query.lowercase()) } as ArrayList<Product>
+                        }
                         binding.lvMyProductItemsSearch.visibility = View.VISIBLE
                     } else {
                         binding.lvMyProductItemsSearch.visibility = View.GONE
@@ -86,6 +90,8 @@ class SearchProductActivity : BaseActivity() {
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText?.length!! > 0) {
                         mAdapterProductTitleList!!.filter.filter(newText)
+                        mProductList = productlist.filter { item -> item.title.lowercase().contains(newText.lowercase()) } as ArrayList<Product>
+
                         binding.lvMyProductItemsSearch.visibility = View.VISIBLE
                     } else {
                         binding.lvMyProductItemsSearch.visibility = View.GONE
