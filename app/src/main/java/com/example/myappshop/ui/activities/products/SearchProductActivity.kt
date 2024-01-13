@@ -27,6 +27,7 @@ class SearchProductActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        getProductListFromFireStore()
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController!!.hide(WindowInsets.Type.statusBars())
@@ -36,13 +37,54 @@ class SearchProductActivity : BaseActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
+
+        binding.lvMyProductItemsSearch.visibility = View.GONE
+        binding.lvMyProductItemsSearch.setOnItemClickListener { parent, view, position, id ->
+            val productResult = mProductList.filter { item -> item.title.equals(mAdapterProductTitleList?.getItem(position)) }
+            val intent = Intent(this@SearchProductActivity, ProductDetailActivity::class.java)
+            intent.putExtra(Constants.EXTRA_PRODUCT_ID, productResult[0].id)
+            intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID, productResult[0].user_id)
+            startActivity(intent)
+        }
+        binding.searchView.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    binding.searchView.clearFocus()
+                    if (query != null) {
+                        if (mTitleProductLists!!.contains(query) && query.isNotEmpty()) {
+                            mAdapterProductTitleList!!.filter.filter(query)
+
+
+                            binding.lvMyProductItemsSearch.visibility = View.VISIBLE
+                        } else {
+                            binding.lvMyProductItemsSearch.visibility = View.GONE
+                        }
+                    }
+
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText?.length!! > 0) {
+                        mAdapterProductTitleList!!.filter.filter(newText)
+                        binding.lvMyProductItemsSearch.visibility = View.VISIBLE
+                    } else {
+                        binding.lvMyProductItemsSearch.visibility = View.GONE
+                    }
+                    return false
+                }
+
+            })
+
+
     }
 
     override fun onResume() {
         super.onResume()
-        getProductListFromFireStore()
+
 
     }
+
 
     private fun getProductListFromFireStore() {
         showProgressDialog(resources.getString(R.string.please_wait))
@@ -61,47 +103,6 @@ class SearchProductActivity : BaseActivity() {
             android.R.layout.simple_list_item_1,
             mTitleProductLists!!
         )
-
         binding.lvMyProductItemsSearch.adapter = mAdapterProductTitleList
-        binding.lvMyProductItemsSearch.visibility = View.GONE
-        binding.lvMyProductItemsSearch.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this@SearchProductActivity, ProductDetailActivity::class.java)
-            intent.putExtra(Constants.EXTRA_PRODUCT_ID, mProductList[position].id)
-            intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID, mProductList[position].user_id)
-            startActivity(intent)
-        }
-        binding.searchView.setOnQueryTextListener(
-            object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    binding.searchView.clearFocus()
-                    if (mTitleProductLists!!.contains(query)) {
-                        mAdapterProductTitleList!!.filter.filter(query)
-                        if (query != null) {
-                           mProductList = productlist.filter { item -> item.title.lowercase().contains(query.lowercase()) } as ArrayList<Product>
-                        }
-                        binding.lvMyProductItemsSearch.visibility = View.VISIBLE
-                    } else {
-                        binding.lvMyProductItemsSearch.visibility = View.GONE
-                    }
-
-                    return false
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText?.length!! > 0) {
-                        mAdapterProductTitleList!!.filter.filter(newText)
-                        mProductList = productlist.filter { item -> item.title.lowercase().contains(newText.lowercase()) } as ArrayList<Product>
-
-                        binding.lvMyProductItemsSearch.visibility = View.VISIBLE
-                    } else {
-                        binding.lvMyProductItemsSearch.visibility = View.GONE
-                    }
-                    return false
-                }
-
-            })
-
-
     }
-
 }
