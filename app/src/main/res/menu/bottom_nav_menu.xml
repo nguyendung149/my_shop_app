@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_dashboard" />
+
+    <item
+        android:id="@+id/navigation_products"
+        android:icon="@drawable/box_open"
+        android:title="@string/title_product" />
+
+    <item
+        android:id="@+id/navigation_orders"
+        android:icon="@drawable/round_shopping_cart_24"
+        android:title="@string/title_order" />
+    <item
+        android:id="@+id/navigation_message"
+        android:icon="@drawable/baseline_message_24"
+        android:title="@string/title_message"/>
+    <item
+        android:id="@+id/navigation_sold_products"
+        android:icon="@drawable/sold_svgrepo_com__1_"
+        android:title="@string/title_sold_products"/>
+
+</menu>

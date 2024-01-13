@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:context=".ui.activities.products.CommentActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_comment_log_activity"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/app_gradient_color_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.example.myappshop.utils.MSPTextViewBold
+            android:id="@+id/tv_title_comment_log"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="@dimen/toolbar_title_paddingStart"
+            android:paddingEnd="0dp"
+            android:text="@string/title_comment_log"
+            android:textColor="@color/white"
+            android:textSize="@dimen/toolbar_title_text_size"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/iv_product_detail_comment_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/product_detail_image_height_comment"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/colorImageViewBackground"
+        android:contentDescription="@string/content_description"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toolbar_comment_log_activity" />
+
+    <LinearLayout
+        android:id="@+id/ll_product_details_title_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/product_details_title_price_marginTop"
+        android:background="@color/dashboard_item_details_bg"
+        android:orientation="vertical"
+        android:padding="@dimen/product_details_title_price_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_product_detail_comment_image">
+
+        <com.example.myappshop.utils.MSPTextViewBold
+            android:id="@+id/tv_product_details_comment_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/item_value_text_color"
+            android:textSize="@dimen/product_details_title_textSize"
+            app:layout_constraintBottom_toTopOf="@+id/sv_comment_log"
+            app:layout_constraintTop_toBottomOf="@+id/iv_product_detail_comment_image"
+            tools:text="Product Title" />
+        <LinearLayout
+            android:id="@+id/ll_rating_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <com.example.myappshop.utils.MSPTextViewBold
+            android:id="@+id/tv_product_details_comment_rating"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="@string/rating_product"
+            android:textColor="@color/item_value_text_color"
+            android:textSize="@dimen/product_details_title_textSize"
+            app:layout_constraintBottom_toTopOf="@+id/sv_comment_log"
+            app:layout_constraintTop_toBottomOf="@+id/iv_product_detail_comment_image" />
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/ratting_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.75"
+            android:numStars="5"
+            android:progress="3"
+            android:progressBackgroundTint="@color/colorSecondaryText"
+            android:progressTint="@color/colorThemePink" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/sv_comment_log"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_product_details_title_comment"
+        app:layout_constraintBottom_toTopOf="@+id/ln_send_comment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/ln_send_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sv_comment_log">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3">
+
+            <com.example.myappshop.utils.MSPEditText
+                android:id="@+id/et_comment_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/send_comment_statement"
+                android:inputType="text"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.example.myappshop.utils.MSPButton
+            android:id="@+id/btn_comment_send"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_background"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/btn_send"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
