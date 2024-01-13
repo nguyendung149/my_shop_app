@@ -141,7 +141,7 @@ open class ChatLogActivity : BaseActivity() {
             "time" to getTime()
         )
 
-        binding?.etMessageContenet?.setText(" ")
+
 
         val uniqueId = listOf(sender, receiver).sorted()
         uniqueId.joinToString(separator = "")
@@ -178,8 +178,7 @@ open class ChatLogActivity : BaseActivity() {
                 if (taskmessage.isSuccessful) {
 
                 }
-
-
+                binding?.etMessageContenet?.setText(" ")
             }
     }
     @SuppressLint("NotifyDataSetChanged")

@@ -52,7 +52,7 @@ class RecentChatAdapter : RecyclerView.Adapter<MyChatListHolder>() {
 
 
         val themessage = chatlist.message!!.split(" ").take(4).joinToString(" ")
-        val makelastmessage = "${chatlist.person}: ${themessage} "
+        val makelastmessage = "${chatlist.person}: $themessage "
 
         holder.lastMessage.setText(makelastmessage)
 
