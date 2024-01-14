@@ -21,6 +21,7 @@ import com.example.myappshop.databinding.FragmentProductsBinding
 import com.example.myappshop.firestore.FirestoreClass
 import com.example.myappshop.models.Product
 import com.example.myappshop.ui.activities.products.AddProductActivity
+import com.example.myappshop.ui.activities.products.ShowNotificationActivity
 import com.example.myappshop.ui.activities.users.SettingsActivity
 
 class ProductsFragment : BaseFragment() {
@@ -70,6 +71,10 @@ class ProductsFragment : BaseFragment() {
 
                 return true
             }
+            R.id.action_notification -> {
+                startActivity(Intent(activity,ShowNotificationActivity::class.java))
+            }
+
         }
         return super.onOptionsItemSelected(item)
     }

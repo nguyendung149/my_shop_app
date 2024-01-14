@@ -16,6 +16,7 @@ import com.example.myappshop.databinding.ActivityCheckOutBinding
 import com.example.myappshop.firestore.FirestoreClass
 import com.example.myappshop.models.Address
 import com.example.myappshop.models.CartProductItem
+import com.example.myappshop.models.Notification
 import com.example.myappshop.models.Order
 import com.example.myappshop.models.Product
 import com.example.myappshop.models.User
@@ -34,6 +35,8 @@ class CheckOutActivity : BaseActivity() {
     private var mSubTotal: Double = 0.0
     private var shippingFee:Double = 0.0
     private lateinit var mOrderDetails: Order
+    private lateinit var mNotification: Notification
+    private lateinit var mUser: User
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,7 +139,17 @@ class CheckOutActivity : BaseActivity() {
                 mTotalAmount.toString(),
                 System.currentTimeMillis()
             )
+            mNotification = Notification(
+                FirestoreClass().getCurrentUserId(),
+                "${mUser.firstName} ${mUser.lastName}",
+                mCartList[0].product_owner_id,
+                mCartList[0].product_id,
+                System.currentTimeMillis(),
+                mUser.image,
+            )
             FirestoreClass().placeOrder(this@CheckOutActivity,mOrderDetails)
+            FirestoreClass().storeNotificationOrderToOwner(this@CheckOutActivity,mNotification)
+
         }
     }
     fun orderPlaceSuccess(){
@@ -171,6 +184,7 @@ class CheckOutActivity : BaseActivity() {
         }else {
             shippingFee = 100000.0
         }
+        mUser = user
     }
     private fun transformNumber(number: Number):String {
         return NumberFormat.getInstance(Locale.US).format(number)

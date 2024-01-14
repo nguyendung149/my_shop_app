@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.myappshop.R
 import com.example.myappshop.models.Address
 import com.example.myappshop.models.CartProductItem
+import com.example.myappshop.models.Notification
 import com.example.myappshop.models.Order
 import com.example.myappshop.models.Product
 import com.example.myappshop.models.RatingProduct
@@ -24,6 +25,7 @@ import com.example.myappshop.ui.activities.products.CartProductListActivity
 import com.example.myappshop.ui.activities.products.CheckOutActivity
 import com.example.myappshop.ui.activities.products.ProductDetailActivity
 import com.example.myappshop.ui.activities.products.SearchProductActivity
+import com.example.myappshop.ui.activities.products.ShowNotificationActivity
 import com.example.myappshop.ui.activities.users.SettingsActivity
 import com.example.myappshop.ui.fragments.DashboardFragment
 import com.example.myappshop.ui.fragments.OrdersFragment
@@ -816,6 +818,42 @@ class FirestoreClass {
                     "Error while storing rating score",
                     exception
                 )
+            }
+    }
+    fun storeNotificationOrderToOwner(activity: CheckOutActivity,notification: Notification){
+        mFireStore.collection(Constants.NOTIFICATION).document().set(notification, SetOptions.merge())
+            .addOnFailureListener { exception ->
+
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while placing an order",
+                    exception
+                )
+
+            }
+    }
+    fun getNotificationItemList(activity:ShowNotificationActivity,ownerID:String){
+        mFireStore.collection(Constants.NOTIFICATION).whereEqualTo("owner_id",ownerID).get()
+            .addOnSuccessListener {document ->
+                activity.hideProgressDialog()
+                var notificationList = ArrayList<Notification>()
+                for (item in document.documents){
+                    val notificationItem = item.toObject(Notification::class.java)!!
+                    notificationItem.id = item.id
+                    notificationList.add(notificationItem)
+                }
+                activity.successGetNotificationList(notificationList)
+
+            }
+            .addOnFailureListener {exception ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while getting notification list",
+                    exception
+                )
+
             }
     }
 

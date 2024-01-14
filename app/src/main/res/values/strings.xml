@@ -48,7 +48,7 @@
     <string name="title_activity_dashboard">Dashboard Activity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">NOTIFICATION</string>
     <string name="title_message_no_avalable">There are currently no messages available!</string>
 
 
@@ -207,4 +207,6 @@
     <string name="lbl_chat_with_shop">Chat with shop.</string>
     <string name="category">Category</string>
     <string name="all_product">All The Product</string>
+    <string name="action_notification">Notification</string>
+    <string name="no_notification_added_yet">No notification available yet.</string>
 </resources>

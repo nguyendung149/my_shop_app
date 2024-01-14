@@ -99,7 +99,7 @@ class ChatFromMessageHome  : BaseActivity() {
     @SuppressLint("SimpleDateFormat")
     private fun getTime(): String {
         val dateFormat = "dd MMM yyyy HH:mm:ss"
-        val formatter = java.text.SimpleDateFormat(dateFormat, Locale.getDefault())
+        val formatter = java.text.SimpleDateFormat(dateFormat, Locale.ENGLISH)
         val calendar: Calendar = Calendar.getInstance()
 
         calendar.timeInMillis = System.currentTimeMillis()
