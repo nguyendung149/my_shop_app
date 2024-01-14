@@ -49,7 +49,7 @@ class NotificationListAdapter constructor(
                     holder.itemView.findViewById<TextView>(R.id.tv_user_name_notification).text = model.user_name
                     holder.itemView.findViewById<TextView>(R.id.tv_order_datetime).text = getTime(model.time)
                     holder.itemView.findViewById<TextView>(R.id.tv_notification_content).text = "Người dùng ${model.user_name} đã" +
-                            "mua sản phầm $productTitle từ bạn."
+                            " mua sản phầm $productTitle từ bạn."
                     holder.itemView.setOnClickListener {
                         if (onClickListener != null) {
                             onClickListener!!.onClick(position, model)
