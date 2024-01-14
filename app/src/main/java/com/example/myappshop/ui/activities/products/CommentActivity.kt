@@ -86,7 +86,10 @@ class CommentActivity : BaseActivity() {
                     if (ratingScore.user_id == FirestoreClass().getCurrentUserId()) {
                         binding.rattingBar.isEnabled = false
                         binding.rattingBar.rating = ratingScore.ratingScore.toFloat()
-                        getComment(productID!!)
+                        getComment(productID!!).observe(
+                            this@CommentActivity, androidx.lifecycle.Observer {
+                                initRecycleView(it)
+                            })
                     }
                 }
             }
@@ -104,7 +107,10 @@ class CommentActivity : BaseActivity() {
                         if (ratingScore.user_id == FirestoreClass().getCurrentUserId()) {
                             binding.rattingBar.isEnabled = false
                             binding.rattingBar.rating = ratingScore.ratingScore.toFloat()
-                            getComment(productID!!)
+                            getComment(productID!!).observe(
+                                this@CommentActivity, androidx.lifecycle.Observer {
+                                    initRecycleView(it)
+                                })
                         }
                     }
                 }.addOnFailureListener {
@@ -112,10 +118,7 @@ class CommentActivity : BaseActivity() {
                 }
         }
 
-        getComment(productID!!).observe(
-            this@CommentActivity, androidx.lifecycle.Observer {
-                initRecycleView(it)
-            })
+
 
 
         binding.btnCommentSend.setOnClickListener {
@@ -131,10 +134,18 @@ class CommentActivity : BaseActivity() {
                 .show()
 
         }
+        getComment(productID!!).observe(
+            this@CommentActivity, androidx.lifecycle.Observer {
+                initRecycleView(it)
+            })
     }
 
     override fun onResume() {
         super.onResume()
+        getComment(productID!!).observe(
+            this@CommentActivity, androidx.lifecycle.Observer {
+                initRecycleView(it)
+            })
 
     }
 
